@@ -1,45 +1,47 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 import java.util.HashMap;
+
+import javax.swing.JFrame;
 
 public class Controller {
 	private OrderLine orderLines;
 	private Order orders;
 	private Customer customer;
-	private CustomerDirectory customerDirectory;
-	private ProductDirectory productDirectory;
+	private CustomerDirectory cDir;
+	private ProductDirectory pDir;
+	private JFrame frame; 
 
-	public Controller(CustomerDirectory customerdirectory) {
-		this.customerDirectory = customerDirectory;
-		this.orders = orders;
+	public Controller(CustomerDirectory cDir, ProductDirectory pDir, JFrame frame) {
+		this.cDir = cDir; 
+		this.pDir = pDir; 
+		this.frame = frame; 
+		
 
 	}
 
 	public Customer addCustomer(String name, String customerNumber, String address) {
-		Customer c = new Customer();
-		c.setName(name);
-		c.setCustomerNumber(customerNumber);
+		Customer aCustomer = new Customer(name, customerNumber, address);
+		aCustomer.setName(name);
+		aCustomer.setCustomerNumber(customerNumber);
+		aCustomer.setAddress(address);
 
-		this.customerDirectory.addCustomer(c);
+		this.cDir.addCustomer(aCustomer);
+		return aCustomer;		
 
-		return c;
 	}
 
 	public Customer findCustomer(String customerNumber) {
-		Customer c;
-		c = this.customerDirectory.findCustomer(customerNumber);
-		if (c != null) {
-			return c;
-		}
-		return null;
+		 return cDir.findCustomer(customerNumber);
 	}
 
 	public Customer removeCustomer(String customerNumber) {
-		Customer c = this.customerDirectory.removeCustomer(customerNumber);
-		if (c != null) {
-			return c;
-		}
-		return null;
+		 return cDir.removeCustomer(customerNumber);
+	}
+	
+	public HashMap<String, Customer> grabCustomer(){
+		HashMap<String, Customer> c = cDir.getCustomers();
+		return c;
 	}
 
 	public Product addProduct(String name, String kategory, int price) {
@@ -48,14 +50,14 @@ public class Controller {
 		p.setKategory(kategory);
 		p.setPrice(price);
 
-		this.productDirectory.addProducts(p);
+		this.pDir.addProducts(p);
 
 		return p;
 	}
 
 	public Product findProduct(String name) {
 		Product p;
-		p = this.productDirectory.findProduct(name);
+		p = this.pDir.findProduct(name);
 		if (p != null) {
 			return p;
 		}
@@ -63,7 +65,7 @@ public class Controller {
 	}
 
 	public Product removeProduct(String name) {
-		Product p = this.productDirectory.removeProduct(name);
+		Product p = this.pDir.removeProduct(name);
 		if (p != null) {
 			return p;
 		}
@@ -71,7 +73,7 @@ public class Controller {
 	}
 
 	public Order addOrder(String orderID, String deliveryDate, String customerNumber) {
-		Customer c= this.customerDirectory.findCustomer(customerNumber);
+		Customer c= this.cDir.findCustomer(customerNumber);
 		if (c != null) {
 			Order o1 = new Order();
 			o1.setOrderID(orderID);
@@ -83,7 +85,7 @@ public class Controller {
 	}
 
 	public String getOrder(String customerNumber) {
-		Customer k = this.customerDirectory.findCustomer(customerNumber);
+		Customer k = this.cDir.findCustomer(customerNumber);
 		if (k != null) {
 			if (k.getOrders().size() == 0) {
 				return k.getName() + "har inga ordrar.";
