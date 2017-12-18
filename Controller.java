@@ -11,6 +11,7 @@ public class Controller {
 	private CustomerDirectory cDir;
 	private ProductDirectory pDir;
 	private JFrame frame; 
+	private Product product;
 
 	public Controller(CustomerDirectory cDir, ProductDirectory pDir, JFrame frame) {
 		this.cDir = cDir; 
@@ -44,24 +45,20 @@ public class Controller {
 		return c;
 	}
 
-	public Product addProduct(String name, String kategory, int price) {
-		Product p = new Product();
+	public Product addProduct(String name, double price, String kategory) {
+		Product p = new Product(name, price, kategory);
 		p.setName(name);
-		p.setKategory(kategory);
 		p.setPrice(price);
+		p.setKategory(kategory);
+
 
 		this.pDir.addProducts(p);
-
 		return p;
 	}
 
 	public Product findProduct(String name) {
-		Product p;
-		p = this.pDir.findProduct(name);
-		if (p != null) {
-			return p;
-		}
-		return null;
+		
+		return pDir.findProduct(name); 
 	}
 
 	public Product removeProduct(String name) {
@@ -101,4 +98,3 @@ public class Controller {
 	}
 
 }
-	
