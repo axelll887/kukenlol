@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+
+
 import javax.swing.JCheckBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JList;
@@ -34,10 +36,9 @@ public class IsProjekt {
 	private JTextField textField_surAndLast;
 	private JTextField textField_address;
 	private JTextField textField_customerNbr;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTable table_1;
+	private JTextField textField_productName;
+	private JTextField textField_kategory;
+	private JTextField textField_productPrice;
 	private JTextField textField;
 	private JTextField textField_7;
 	private JTextField textField_8;
@@ -76,7 +77,8 @@ public class IsProjekt {
 	 */
 	private void initialize() {
 		CustomerDirectory cD = new CustomerDirectory(); 
-		Controller controller = new Controller(cD, null, frame); 
+		ProductDirectory pD = new ProductDirectory();
+		Controller controller = new Controller(cD, pD, frame); 
 		
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -89,9 +91,13 @@ public class IsProjekt {
 		lblKundregister.setBounds(28, 6, 112, 24);
 		frame.getContentPane().add(lblKundregister);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(28, 228, 293, 66);
-		frame.getContentPane().add(textArea);
+		JTextArea textArea_customer = new JTextArea();
+		textArea_customer.setBounds(28, 228, 293, 66);
+		frame.getContentPane().add(textArea_customer);
+		
+		JTextArea textArea_product = new JTextArea();
+		textArea_product.setBounds(396, 228, 313, 66);
+		frame.getContentPane().add(textArea_product);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(28, 27, 293, 16);
@@ -130,9 +136,9 @@ public class IsProjekt {
 					textField_surAndLast.setText(aPerson.getName());
 					textField_customerNbr.setText(aPerson.getCustomerNumber());
 					textField_address.setText(aPerson.getAddress());
-					textArea.setText("Person " + aPerson.getName().toUpperCase() + " hittad.");
+					textArea_customer.setText("Person " + aPerson.getName().toUpperCase() + " hittad.");
 				} else {
-					textArea.setText("Personen inte hittad.");
+					textArea_customer.setText("Personen inte hittad.");
 				}
 			}
 		});
@@ -167,14 +173,15 @@ public class IsProjekt {
 				String address = textField_address.getText(); 
 				Customer aCustomer = controller.findCustomer(customerNumber);
 				
+				
 				if (textField_surAndLast.getText().isEmpty() || textField_customerNbr.getText().isEmpty()) {
-					textArea.setText("Du måste fylla i alla fält.");
+					textArea_customer.setText("Du måste fylla i alla fält.");
 				} else if (aCustomer!=null)
-					textArea.setText("Personnummret finns redan");
+					textArea_customer.setText("Personnummret finns redan");
 
 				else {
 					aCustomer = controller.addCustomer(name, customerNumber, address);
-					textArea.setText("Person " + aCustomer.getName().toUpperCase() + " tillagd");
+					textArea_customer.setText("Person " + aCustomer.getName().toUpperCase() + " tillagd");
 				}
 			
 			}
@@ -192,9 +199,9 @@ public class IsProjekt {
 
 					textField_surAndLast.setText(aPerson.getName());
 					textField_customerNbr.setText(aPerson.getCustomerNumber());
-					textArea.setText("Personen finns redan");
+					textArea_customer.setText("Personen finns redan");
 				} else {
-					textArea.setText("Person finns inte.");
+					textArea_customer.setText("Person finns inte.");
 
 				}
 
@@ -232,33 +239,44 @@ public class IsProjekt {
 		lblKategory.setBounds(564, 39, 72, 16);
 		frame.getContentPane().add(lblKategory);
 		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_4.setBounds(390, 54, 130, 26);
-		frame.getContentPane().add(textField_4);
-		textField_4.setColumns(10);
+		textField_productName = new JTextField();
+		textField_productName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_productName.setBounds(390, 54, 130, 26);
+		frame.getContentPane().add(textField_productName);
+		textField_productName.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_5.setBounds(558, 54, 130, 26);
-		frame.getContentPane().add(textField_5);
-		textField_5.setColumns(10);
+		textField_kategory = new JTextField();
+		textField_kategory.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_kategory.setBounds(558, 54, 130, 26);
+		frame.getContentPane().add(textField_kategory);
+		textField_kategory.setColumns(10);
 		
 		JLabel lblPrice = new JLabel("Pris");
 		lblPrice.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		lblPrice.setBounds(396, 80, 61, 16);
 		frame.getContentPane().add(lblPrice);
 		
-		textField_6 = new JTextField();
-		textField_6.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_6.setBounds(390, 93, 130, 26);
-		frame.getContentPane().add(textField_6);
-		textField_6.setColumns(10);
+		textField_productPrice = new JTextField();
+		textField_productPrice.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_productPrice.setBounds(390, 93, 130, 26);
+		frame.getContentPane().add(textField_productPrice);
+		textField_productPrice.setColumns(10);
 		
 		JButton btnSearchProduct = new JButton("Sök");
 		btnSearchProduct.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnSearchProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String name = textField_productName.getText();
+
+				Product p = controller.findProduct(name);
+				if (p != null) {
+					textField_productName.setText(p.getName());
+					textField_productPrice.setText("du måste fixa denna");
+					textField_kategory.setText(p.getKategory());
+					textArea_product.setText("Produkten " + p.getName().toUpperCase() + " hittad.");
+				} else {
+					textArea_product.setText("Produkten inte hittad.");
+				}
 			}
 		});
 		btnSearchProduct.setBounds(392, 131, 117, 29);
@@ -268,28 +286,53 @@ public class IsProjekt {
 		btnCreateProduct.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnCreateProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String name = textField_productName.getText();
+				String pris  = textField_productPrice.getText();
+				double price= Double.parseDouble(pris);
+				String kategory = textField_kategory.getText(); 
+				Product p = controller.findProduct(name);
+				
+ 				
+				if (textField_productName.getText().isEmpty() || textField_productPrice.getText().isEmpty()) {
+					textArea_product.setText("Du måste fylla i alla fält.");
+				} else if (p!=null)
+					textArea_product.setText("Produkten finns redan");
+
+				else {
+					p = controller.addProduct(name, price, kategory);
+					textArea_product.setText("Person " + p.getName().toUpperCase() + " tillagd");
+				}
+			
 			}
 		});
-		btnCreateProduct.setBounds(566, 131, 117, 29);
+		btnCreateProduct.setBounds(391, 166, 117, 29);
 		frame.getContentPane().add(btnCreateProduct);
 		
 		JButton btnRemoveProduct = new JButton("Ta bort");
 		btnRemoveProduct.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnRemoveProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String name = textField_productName.getText();
+
+				Product p = controller.removeProduct(name);
+				if (p != null) {
+
+					textField_productName.setText(p.getName());
+					textField_productPrice.setText("Du måste fixa denna");
+					textArea_product.setText("Produkt " + p.getName().toUpperCase() + " borttagen.");
+				} else {
+					textArea_product.setText("Produkten finns inte.");
+
+				}
+
 			}
 		});
-		btnRemoveProduct.setBounds(392, 166, 117, 29);
+		btnRemoveProduct.setBounds(566, 131, 117, 29);
 		frame.getContentPane().add(btnRemoveProduct);
 		
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setBounds(396, 218, 293, 12);
 		frame.getContentPane().add(separator_5);
-		
-		table_1 = new JTable();
-		table_1.setFont(new Font("Wingdings", Font.PLAIN, 12));
-		table_1.setBounds(396, 230, 287, 58);
-		frame.getContentPane().add(table_1);
 		
 		JSeparator separator_6 = new JSeparator();
 		separator_6.setBounds(396, 292, 292, 12);
@@ -452,6 +495,8 @@ public class IsProjekt {
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(28, 527, 655, 12);
 		frame.getContentPane().add(separator_3);
+		
+		
 		
 		
 	}
