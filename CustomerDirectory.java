@@ -1,4 +1,4 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 import java.util.HashMap;
 
@@ -16,7 +16,7 @@ public class CustomerDirectory {
 
 	public void addCustomer(Customer c) {
 		customers.put(c.getCustomerNumber(), c);
-
+		
 	}
 
 	public Customer findCustomer(String customerNumber) {
@@ -25,9 +25,10 @@ public class CustomerDirectory {
 
 	public Customer removeCustomer(String customerNumber) {
 		Customer c = this.findCustomer(customerNumber);
-		if (c.getCustomerNumber().equals(customerNumber)) {
+		if (c!=null) {
 			this.customers.remove(customerNumber);
 		}
 		return null;
+		
 	}
 }
