@@ -1,4 +1,4 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 import java.util.HashMap;
 
@@ -10,6 +10,12 @@ public class Product {
 	private HashMap<String, OrderLine> orderLine = new HashMap<String, OrderLine>();
 	private HashMap<String, Copy> copies = new HashMap<String, Copy>();
 	private ProductDirectory productDirectory;
+	
+	public Product (String name, double price, String kategory ) {
+		this.name=name;
+		this.price=price;
+		this.kategory=kategory;
+	}
 
 	public String getName() {
 		return this.name;
