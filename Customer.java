@@ -1,4 +1,4 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 import java.util.HashMap;
 
@@ -9,6 +9,12 @@ public class Customer {
 	private String address;
 	private CustomerDirectory customerDirectory;
 	private HashMap<String, Order> orders = new HashMap<String, Order>();
+	
+	public Customer (String name, String customerNumber, String address) {
+		this.name=name;
+		this.customerNumber=customerNumber;
+		this.address=address;
+	}
 
 	public String getCustomerNumber() {
 		return this.customerNumber;
