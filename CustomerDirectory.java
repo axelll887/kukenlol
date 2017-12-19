@@ -10,7 +10,7 @@ public class CustomerDirectory {
 		return this.customers;
 	}
 
-	public void setKunder(HashMap<String, Customer> customers) {
+	public void setCustomers(HashMap<String, Customer> customers) {
 		this.customers = customers;
 	}
 
