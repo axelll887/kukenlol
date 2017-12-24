@@ -1,4 +1,4 @@
-package Githubtest;
+package org.lu.ics.labbar;
 
 import java.util.HashMap;
 
@@ -11,7 +11,6 @@ public class Controller {
 	private CustomerDirectory cDir;
 	private ProductDirectory pDir;
 	private JFrame frame; 
-	private Product product;
 
 	public Controller(CustomerDirectory cDir, ProductDirectory pDir, JFrame frame) {
 		this.cDir = cDir; 
@@ -20,65 +19,72 @@ public class Controller {
 		
 
 	}
+	
+	public Copy createCopy(String serialnumber) {
+		Copy c = new Copy();
+		c.setSerialnumber(serialnumber);
+		return c;
+	}
 
-	public Customer addCustomer(String name, String customerNumber, String address) {
-		Customer aCustomer = new Customer(name, customerNumber, address);
-		aCustomer.setName(name);
+	public Customer addCustomer(String customerNumber, String name, String address) {
+		Customer aCustomer = new Customer(customerNumber, name, address);
 		aCustomer.setCustomerNumber(customerNumber);
+		aCustomer.setName(name);
 		aCustomer.setAddress(address);
 
 		this.cDir.addCustomer(aCustomer);
-		return aCustomer;		
+		return aCustomer; 
+		
 
 	}
 
 	public Customer findCustomer(String customerNumber) {
-		 return cDir.findCustomer(customerNumber);
+		return cDir.findCustomer(customerNumber);
 	}
 
 	public Customer removeCustomer(String customerNumber) {
-		 return cDir.removeCustomer(customerNumber);
+		Customer customer = this.cDir.removeCustomer(customerNumber);
+		if(customer != null){
+		return customer;
+	}
+	return null; 
 	}
 	
 	public HashMap<String, Customer> grabCustomer(){
-		HashMap<String, Customer> c = cDir.getCustomers();
-		return c;
+		HashMap<String, Customer> customers = cDir.getCustomers();
+		return customers;
 	}
 
-	public Product addProduct(String name, double price, String kategory) {
-		Product p = new Product(name, price, kategory);
-		p.setName(name);
-		p.setPrice(price);
-		p.setKategory(kategory);
+	public Product addProduct(String productName, double price, String kategory) {
+		Product aProduct = new Product(productName, price, kategory);
+		aProduct.setProductName(productName);
+		aProduct.setKategory(kategory);
+		aProduct.setPrice(price);
 
-
-		this.pDir.addProducts(p);
-		return p;
+		this.pDir.addProducts(aProduct);
+		return aProduct;
 	}
 
-	public Product findProduct(String name) {
+	public Product findProduct(String productName) {
+		return pDir.findProduct(productName); 
 		
-		return pDir.findProduct(name); 
 	}
 
-	public Product removeProduct(String name) {
-		Product p = this.pDir.removeProduct(name);
+	public Product removeProduct(String productName) {
+		Product p = pDir.removeProduct(productName);
 		if (p != null) {
 			return p;
 		}
-		return null;
+		return null; 
+		
 	}
 
-	public Order addOrder(String orderID, String deliveryDate, String customerNumber) {
-		Customer c= this.cDir.findCustomer(customerNumber);
-		if (c != null) {
-			Order o1 = new Order();
-			o1.setOrderID(orderID);
-			o1.setDeliveryDate(deliveryDate);
-			o1.setCustomer(c);
-			c.addOrder(o1);
-		}
-		return null;
+	public  void addOrder(String orderID, String deliveryDate) {
+			Order order = new Order();
+			order.setOrderID(orderID);
+			order.setDeliveryDate(deliveryDate);
+			customer.addOrder(order);
+		
 	}
 
 	public String getOrder(String customerNumber) {
@@ -96,5 +102,18 @@ public class Controller {
 		}
 		return "Det finns ingen med det personnumret";
 	}
+	
+	public Copy addCopy(String serialnumber, String productName) {
+		Product p = this.pDir.findProduct(productName);
+		if(p != null) {
+			Copy c = new Copy(); 
+			c.setSerialnumber(serialnumber);
+			c.setProduct(p);
+			p.addCopy(c);
+		}
+		return null; 
+		
+	}
 
 }
+	
