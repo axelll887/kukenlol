@@ -1,11 +1,17 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 public class OrderLine {
 
 	private String number;
-	private int quantity;
+	private int quantity=0;
 	private Order order;
 	private Product product;
+
+	
+
+	public OrderLine(String number) {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getNumber() {
 		return this.number;

@@ -65,20 +65,20 @@ public class Product {
 		this.productDirectory = productDirectory;
 	}
 
-	public void addCopy(Copy e) {
-		copies.put(e.getSerialnumber(), e);
+	public void addCopy(Copy c) {
+		copies.put(c.getserialNumber(), c);
 
 	}
 
-	public Copy findCopy(String serialnumber) {
-		return copies.get(serialnumber);
+	public Copy findCopy(String serialNumber) {
+		return copies.get(serialNumber);
 	}
 
-	public Copy removeCopy(String serialnumber) {
-		Copy e = this.findCopy(serialnumber);
-		if (e.getSerialnumber().equals(serialnumber)) {
-			this.copies.remove(serialnumber);
+	public Copy removeCopy(String serialNumber) {
+		Copy e = this.findCopy(serialNumber);
+		if (e!=null) {
+			this.copies.remove(serialNumber);
 		}
-		return null;
+		return e;
 	}
 }

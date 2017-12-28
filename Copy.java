@@ -1,16 +1,23 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 public class Copy {
-
-	private String serialnumber;
+    
+	private String serialNumber;
 	private Product product;
 
-	public String getSerialnumber() {
-		return this.serialnumber;
+	public Copy(String serialNumber) {
+		this.serialNumber=serialNumber;
+		
+	}
+	
+	
+	
+	public String getserialNumber() {
+		return this.serialNumber;
 	}
 
-	public void setSerialnumber(String serienummer) {
-		this.serialnumber = serienummer;
+	public void setserialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
 	}
 
 	public Product getProduct() {

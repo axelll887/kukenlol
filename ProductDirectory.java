@@ -1,4 +1,4 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 import java.util.HashMap;
 
@@ -25,7 +25,7 @@ public class ProductDirectory {
 
 	public Product removeProduct(String name) {
 		Product p = this.findProduct(name);
-		if (p.getName().equals(name)) {
+		if (p!=null) {
 			this.products.remove(name);
 		}
 		return p;

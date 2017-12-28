@@ -1,4 +1,4 @@
-package org.lu.ics.labbar;
+package Githubtest;
 
 import java.util.HashMap;
 
@@ -25,10 +25,12 @@ public class Order {
 		this.deliveryDate = deliveryDate;
 	}
 
+	public String getCustomerName() {
+		return this.customer.getName();
+	}
 	public Customer getCustomer() {
 		return this.customer;
 	}
-
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
